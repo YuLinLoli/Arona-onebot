@@ -1,4 +1,4 @@
-//! arona-rs：Arona 的 Rust 移植版（onebot 独立模式，完全剥离 mirai）
+//! arona-onebot：Arona 的 Rust 移植版（onebot 独立模式，完全剥离 mirai）
 //! 对应原版 standalone/AronaStandalone 的启动流程。
 //!
 //! 启动模式：默认打开管理 GUI；加 `--nogui` 只启动命令行(黑窗口)模式。

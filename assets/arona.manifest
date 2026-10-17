@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
-  Arona-rs 应用程序清单：随 exe 一起嵌入（build.rs 里作为 RT_MANIFEST 资源编译进 .res）。
+  Arona-onebot 应用程序清单：随 exe 一起嵌入（build.rs 里作为 RT_MANIFEST 资源编译进 .res）。
 
   requestedExecutionLevel = asInvoker
     这里故意保持 asInvoker，不要求系统在启动时强制提权。原因见 src/runtime/elevate.rs：
@@ -16,7 +16,7 @@
     允许超过 260 字符的路径。
 -->
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-  <assemblyIdentity type="win32" name="YuLinLoli.Arona-rs" version="1.0.0.0" processorArchitecture="*"/>
+  <assemblyIdentity type="win32" name="YuLinLoli.Arona-onebot" version="1.0.0.0" processorArchitecture="*"/>
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
     <security>
       <requestedPrivileges>

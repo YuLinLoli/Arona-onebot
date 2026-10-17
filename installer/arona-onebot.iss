@@ -1,10 +1,10 @@
 ﻿; ============================================================================
-;  Arona-rs 安装包脚本（Inno Setup 6）
+;  Arona-onebot 安装包脚本（Inno Setup 6）
 ;
 ;  编译方式（二选一）：
 ;    1) 项目内：cargo installer
 ;       （等价于 cargo test installer_build --release -- --ignored --nocapture）
-;    2) 手动：  ISCC.exe /DAppVersion=0.2.3 /DHasSoftgl=1 arona-rs.iss
+;    2) 手动：  ISCC.exe /DAppVersion=0.2.3 /DHasSoftgl=1 arona-onebot.iss
 ;
 ;  可选命令行宏（不传则用下面的默认值）：
 ;    /DAppVersion=0.2.3      版本号，默认 0.0.0
@@ -14,7 +14,7 @@
 ;                                        不传则该组件不存在；传了也允许在「自定义安装」里取消勾选
 ;
 ;  安装/更新行为：
-;    - 安装目录会写进注册表 HKA\Software\YuLinLoli\Arona-rs（InstallPath / Version / ExeName）
+;    - 安装目录会写进注册表 HKA\Software\YuLinLoli\Arona-onebot（InstallPath / Version / ExeName）
 ;    - 再次运行安装包（即“下载新版本再装一次”）时，会自动认到已有的安装目录并装回去，
 ;      同时跳过「程序简介」和「开源协议」两页，只需一路下一步
 ;    - 也可以用 setup.exe /UPDATE 显式声明这是一次更新安装
@@ -32,14 +32,14 @@
   #define OutputDir "..\target\release"
 #endif
 
-#define AppName "Arona-rs"
-; 主程序固定叫 arona-rs.exe，不带版本号：升级/自动更新直接覆盖同名文件，
+#define AppName "Arona-onebot"
+; 主程序固定叫 arona-onebot.exe，不带版本号：升级/自动更新直接覆盖同名文件，
 ; 快捷方式与注册表里的 ExeName 不用跟着版本号变。版本号只体现在安装包名
 ; （OutputBaseFilename）与「应用和功能」里显示的版本上。
-#define AppExeName "arona-rs.exe"
-#define AppURL "https://github.com/YuLinLoli/Arona-rs"
+#define AppExeName "arona-onebot.exe"
+#define AppURL "https://github.com/YuLinLoli/Arona-onebot"
 #define AppAuthor "YuLinLoli"
-#define RegSubKey "Software\YuLinLoli\Arona-rs"
+#define RegSubKey "Software\YuLinLoli\Arona-onebot"
 ; Inno 自己写的卸载项（更新安装时读它兜底找旧目录）
 #define UninstallSubKey "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{B7F3E0C2-5D4A-4E1B-9C7F-2A6D8E3140B5}_is1"
 
@@ -64,7 +64,7 @@ InfoBeforeFile=intro.txt
 ; 开源协议：AGPLv3 完整原文（首次安装时展示；更新安装会自动跳过）
 LicenseFile=..\LICENSE
 OutputDir={#OutputDir}
-OutputBaseFilename=arona-rs-{#AppVersion}-setup-win-x64
+OutputBaseFilename=arona-onebot-{#AppVersion}-setup-win-x64
 SetupIconFile=..\assets\arona.ico
 UninstallDisplayIcon={app}\{#AppExeName}
 UninstallDisplayName={#AppName} {#AppVersion}
@@ -81,7 +81,7 @@ MinVersion=6.1sp1
 ; 默认「仅为我安装」，装在 %LOCALAPPDATA%\Programs 下，全程不需要管理员权限，
 ; 也避免装进 Program Files 后普通用户写不了数据目录（arona-standalone/）
 ;
-; 注意：这里只管「安装程序」本身的权限；主程序 arona-rs.exe 启动时会自己申请
+; 注意：这里只管「安装程序」本身的权限；主程序 arona-onebot.exe 启动时会自己申请
 ; 管理员权限（UAC 自提权，见 src/runtime/elevate.rs），与安装范围无关。
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
@@ -104,7 +104,7 @@ Name: "custom"; Description: "自定义安装（可去掉 CPU 软件渲染依赖
 [Components]
 ; 默认「完整安装」会带上 softgl；选「自定义安装」时可以把 softgl 取消掉节省 62MB
 ; （取消后服务器 / 无显卡机器上 GUI 会退回命令行模式，机器人功能不受影响）
-Name: "main"; Description: "Arona-rs 主程序（必需）"; Types: full custom; Flags: fixed
+Name: "main"; Description: "Arona-onebot 主程序（必需）"; Types: full custom; Flags: fixed
 Name: "softgl"; Description: "CPU 软件渲染依赖（约 62 MB，Mesa llvmpipe；服务器 / 无显卡驱动 / 无 DX12 的机器靠它打开管理面板）"; Types: full custom
 
 [Tasks]
@@ -148,7 +148,7 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "
 
 [InstallDelete]
 ; 旧版本升级时清掉上一份带版本号的 exe，避免目录里堆积多个版本
-Type: files; Name: "{app}\arona-rs-*.exe"
+Type: files; Name: "{app}\arona-onebot-*.exe"
 
 [Run]
 Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}}"; WorkingDir: "{app}"; Flags: nowait postinstall skipifsilent
@@ -161,7 +161,7 @@ var
   IsUpdateInstall: Boolean;
   // 注册表里记录的旧安装目录
   RecordedDir: String;
-  // 安装前是否结束过正在运行的 Arona-rs（旧 exe / softgl 的 DLL 被占用时替换会失败）
+  // 安装前是否结束过正在运行的 Arona-onebot（旧 exe / softgl 的 DLL 被占用时替换会失败）
   KilledRunningApp: Boolean;
 
 // 命令行里是否出现某个参数（前缀匹配，大小写不敏感）：/UPDATE、/DIR=...、/SILENT ...
@@ -302,7 +302,7 @@ end;
 
 // ============================ 安装前的“关闭正在运行的程序” ============================
 //
-// 为什么必须自己关：正在运行的 arona-rs.exe（以及它加载的 softgl\*.dll）会被 Windows
+// 为什么必须自己关：正在运行的 arona-onebot.exe（以及它加载的 softgl\*.dll）会被 Windows
 // 以共享读方式占住，谁都删不掉也改不了名。Inno 处理这种情况的顺序是
 //   1) 删掉旧文件（删不掉时它只是重试 4 次，然后**默默放过**继续往下走）
 //   2) 把解压出来的临时文件改名成目标名
@@ -322,9 +322,9 @@ const
   APP_KILLED = 1;  // 找到并结束了正在运行的实例
   APP_STUCK = 2;   // exe 仍被占用且结束不掉（多为提权实例 / 其它会话 / 权限不足）
 
-// 结束安装目录里正在运行的 Arona-rs（含它加载的 softgl\*.dll）。
+// 结束安装目录里正在运行的 Arona-onebot（含它加载的 softgl\*.dll）。
 //
-// 为什么不能只用 Get-Process 的 .Path 过滤：主程序 arona-rs.exe 启动时会自己 UAC 提权，
+// 为什么不能只用 Get-Process 的 .Path 过滤：主程序 arona-onebot.exe 启动时会自己 UAC 提权，
 // 而未提权的安装程序读不到提权进程的 .Path（本机实测 286 个进程里 143 个读不到）。
 // 老逻辑于是得出「安装目录里没有正在运行的程序」，安装照常继续；等到写 exe 时文件仍被占用，
 // 而 [Files] 上带着 restartreplace，Inno 就把替换推迟到下次开机 —— 用户看到的就是最后一步
@@ -332,8 +332,8 @@ const
 //
 // 所以这里分两轮：
 //   1) 先按 .Path 精确结束安装目录里的进程（不会误伤开发目录里的同名程序）
-//   2) 再用「独占打开 {app}\arona-rs.exe」验证是否真的没人占用；仍被占用时，
-//      才按镜像名结束「本会话」里的 arona-rs（覆盖读不到 .Path 的提权实例）
+//   2) 再用「独占打开 {app}\arona-onebot.exe」验证是否真的没人占用；仍被占用时，
+//      才按镜像名结束「本会话」里的 arona-onebot（覆盖读不到 .Path 的提权实例）
 function StopRunningApp(): Integer;
 var
   ResultCode: Integer;
@@ -350,7 +350,7 @@ begin
     '$killed=$false; ' +
     '$targets=@(Get-Process | Where-Object { $_.Path -and $_.Path.ToLower().StartsWith($dir) }); ' +
     'if ($targets.Count -gt 0) { $killed=$true; $targets | Stop-Process -Force; Start-Sleep -Milliseconds 800 }; ' +
-    'if (TestLocked) { $more=@(Get-Process -Name ''arona-rs'' | Where-Object { $_.SessionId -eq $me -and -not ($_.Path -and $_.Path.ToLower().StartsWith($dir)) }); ' +
+    'if (TestLocked) { $more=@(Get-Process -Name ''arona-onebot'' | Where-Object { $_.SessionId -eq $me -and -not ($_.Path -and $_.Path.ToLower().StartsWith($dir)) }); ' +
       'if ($more.Count -gt 0) { $killed=$true; $more | Stop-Process -Force; Start-Sleep -Milliseconds 800 } }; ' +
     'if (TestLocked) { exit 2 } elseif ($killed) { exit 1 } else { exit 0 }';
 
@@ -358,7 +358,7 @@ begin
           '-NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "' + Script + '"',
           '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
   begin
-    Log('检查/结束正在运行的 Arona-rs: 退出码 ' + IntToStr(ResultCode));
+    Log('检查/结束正在运行的 Arona-onebot: 退出码 ' + IntToStr(ResultCode));
     if ResultCode = 0 then
       Result := APP_NONE
     else if ResultCode = 1 then
@@ -369,8 +369,8 @@ begin
   else
   begin
     // 没有 PowerShell（极少见）时退回按镜像名结束，尽力而为；128 = 没有找到进程
-    Log('PowerShell 不可用，改用 taskkill 结束 arona-rs.exe');
-    Exec('taskkill.exe', '/F /IM arona-rs.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Log('PowerShell 不可用，改用 taskkill 结束 arona-onebot.exe');
+    Exec('taskkill.exe', '/F /IM arona-onebot.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if ResultCode = 128 then
       Result := APP_NONE
     else if ResultCode = 0 then
@@ -393,10 +393,10 @@ begin
     APP_KILLED:
       begin
         KilledRunningApp := True;
-        Log('安装前已结束正在运行的 Arona-rs');
+        Log('安装前已结束正在运行的 Arona-onebot');
       end;
     APP_STUCK:
-      Result := '检测到 Arona-rs 正在运行，并且无法自动结束它。' + #13#10 + #13#10 +
+      Result := '检测到 Arona-onebot 正在运行，并且无法自动结束它。' + #13#10 + #13#10 +
         '请先手动退出程序（包括命令行黑窗口），再点「上一步」→「下一步」重试；' + #13#10 +
         '也可以右键安装包选「以管理员身份运行」后重装。' + #13#10 + #13#10 +
         '直接继续的话，轻则报「MoveFile 失败；错误代码 183」，重则把文件替换推迟到下次开机、' + #13#10 +
@@ -404,7 +404,7 @@ begin
   end;
 end;
 
-// 静默安装（/SILENT、/VERYSILENT，例如自动更新）时没有「完成」页可以勾「启动 Arona-rs」，
+// 静默安装（/SILENT、/VERYSILENT，例如自动更新）时没有「完成」页可以勾「启动 Arona-onebot」，
 // 而安装前又把正在跑的机器人关掉了，这里补一次自动重启，免得服务器上机器人停了没人发现
 procedure CurStepChanged(CurStep: TSetupStep);
 var
@@ -412,7 +412,7 @@ var
 begin
   if (CurStep = ssPostInstall) and KilledRunningApp and WizardSilent then
   begin
-    Log('静默安装：自动重新启动 Arona-rs');
+    Log('静默安装：自动重新启动 Arona-onebot');
     Exec(ExpandConstant('{app}\{#AppExeName}'), '', ExpandConstant('{app}'),
          SW_SHOWNORMAL, ewNoWait, ResultCode);
   end;

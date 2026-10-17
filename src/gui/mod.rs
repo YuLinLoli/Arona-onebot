@@ -1,7 +1,7 @@
 //! Arona 管理 GUI（egui/eframe 原生窗口）
 //! 功能：分群功能开关、群成员黑名单、OneBot 连接配置（支持多实例）与热重载、实时日志。
 //! 构建：cargo build --release（GUI 默认启用，--no-default-features 可关闭）；
-//! 运行：arona-rs 默认打开本面板，arona-rs --nogui 只启动命令行(黑窗口)
+//! 运行：arona-onebot 默认打开本面板，arona-onebot --nogui 只启动命令行(黑窗口)
 use crate::admin;
 use crate::config::onebot::{ConnectionType, OneBotConfig};
 use crate::runtime::config as runtime_config;

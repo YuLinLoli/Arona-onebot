@@ -98,7 +98,7 @@ FSF 可能发布新版 AGPL；除非作品声明"或任何更新版本"，否则
 
 ## 本项目的做法
 
-- 仓库：<https://github.com/YuLinLoli/Arona-rs>
+- 仓库：<https://github.com/YuLinLoli/Arona-onebot>
 - 依据 AGPLv3 第 13 节，通过网络与本机器人交互的用户可从上方的仓库地址获取完整对应源码。
 - 上游原版：<https://github.com/diyigemt/arona>（Copyright (C) 2020-2021 StageGuard / diyigemt）
 - 本移植版：Copyright (C) 2026 YuLinLoli

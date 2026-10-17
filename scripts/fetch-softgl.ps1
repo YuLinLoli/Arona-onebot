@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    为 arona-rs 获取「软件 OpenGL(softgl)」兜底依赖（Mesa llvmpipe）。
+    为 arona-onebot 获取「软件 OpenGL(softgl)」兜底依赖（Mesa llvmpipe）。
 
 .DESCRIPTION
     Windows Server / 没有显卡驱动的虚拟机只有 GDI 自带的 OpenGL 1.1，而 egui 需要
@@ -111,7 +111,7 @@ try {
 
     $total = [math]::Round(((Get-ChildItem $Dest -File | Measure-Object Length -Sum).Sum / 1MB), 1)
     Write-Host "[softgl] 完成: $Dest (共 $total MB)" -ForegroundColor Green
-    Write-Host "[softgl] 之后运行 arona-rs 时, 前几个渲染后端卡死或失败会自动切到 llvmpipe; 也可显式加 --softgl"
+    Write-Host "[softgl] 之后运行 arona-onebot 时, 前几个渲染后端卡死或失败会自动切到 llvmpipe; 也可显式加 --softgl"
 }
 finally {
     Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue

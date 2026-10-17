@@ -112,8 +112,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "arona-rs"
-version = "0.3.4"
+name = "arona-onebot"
+version = "1.0.0"
 dependencies = [
  "anyhow",
  "axum",

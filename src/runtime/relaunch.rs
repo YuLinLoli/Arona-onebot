@@ -77,7 +77,7 @@ mod tests {
 
     #[test]
     fn strips_softgl_flag_and_gui_attempt_progress() {
-        let args: Vec<String> = ["arona-rs.exe", "--nogui", "--softgl", "--gui-attempt=2"]
+        let args: Vec<String> = ["arona-onebot.exe", "--nogui", "--softgl", "--gui-attempt=2"]
             .iter()
             .map(|value| value.to_string())
             .collect();
@@ -88,7 +88,7 @@ mod tests {
 
     #[test]
     fn resumes_from_next_renderer() {
-        let args: Vec<String> = ["arona-rs.exe", "--renderer=wgpu"]
+        let args: Vec<String> = ["arona-onebot.exe", "--renderer=wgpu"]
             .iter()
             .map(|value| value.to_string())
             .collect();

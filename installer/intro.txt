@@ -1,15 +1,15 @@
 ﻿============================================================
- Arona-rs —— 碧蓝档案 QQ 机器人（OneBot 独立模式）
+ Arona-onebot —— 碧蓝档案 QQ 机器人（OneBot 独立模式）
  原版 arona 的 Rust 移植版，完全剥离 Mirai / JVM
 ============================================================
 
 【这是什么】
 
-Arona-rs 是开源项目 arona（Kotlin + Mirai 插件）的 Rust 重写版本，只保留
+Arona-onebot 是开源项目 arona（Kotlin + Mirai 插件）的 Rust 重写版本，只保留
 OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没有插件目录，
 一个 exe 直接跑。
 
-  - 项目仓库：https://github.com/YuLinLoli/Arona-rs
+  - 项目仓库：https://github.com/YuLinLoli/Arona-onebot
   - 上游原版：https://github.com/diyigemt/arona
   - 开源协议：GNU AGPLv3（详见下一页许可证）
 
@@ -55,7 +55,7 @@ OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没�
 
 【关于管理员权限（UAC）】
 
-  主程序（arona-rs.exe）启动时会自动申请管理员权限（弹 UAC），因为机器人需要写
+  主程序（arona-onebot.exe）启动时会自动申请管理员权限（弹 UAC），因为机器人需要写
   数据目录、监听端口、必要时替换 softgl\ 下的渲染 DLL，以管理员身份运行可以避免
   「启动没反应」「保存配置失败」「监听不了端口」等问题。
 
@@ -68,9 +68,9 @@ OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没�
 
 【安装后怎么用】
 
-  1. 安装完成后启动「Arona-rs」管理面板。
+  1. 安装完成后启动「Arona-onebot」管理面板。
   2. 右上角「外观」可以切换白天 / 黑夜模式（白天黑字、黑夜白字，选择会记住）。
-     主程序固定叫 arona-rs.exe，程序升级直接覆盖这个文件即可，路径不用改。
+     主程序固定叫 arona-onebot.exe，程序升级直接覆盖这个文件即可，路径不用改。
   3. 在「OneBot 配置」标签页里添加连接（正向/反向 WebSocket、正向/反向 HTTP），
      填好机器人 QQ 号与连接参数，保存后连接会自动热重载。
   4. 在「群配置」标签页里给需要的群开关功能、维护黑名单。
@@ -92,7 +92,7 @@ OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没�
 
   安装程序会把安装目录写进注册表：
 
-     HKEY_CURRENT_USER\Software\YuLinLoli\Arona-rs
+     HKEY_CURRENT_USER\Software\YuLinLoli\Arona-onebot
        InstallPath        安装目录
        Version            已安装版本
        ExeName            主程序文件名
@@ -108,7 +108,7 @@ OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没�
 
   也可以在命令行里显式声明这是一次更新安装（装完自动关闭，适合脚本/自动更新）：
 
-     arona-rs-<版本号>-setup-win-x64.exe /VERYSILENT /NORESTART
+     arona-onebot-<版本号>-setup-win-x64.exe /VERYSILENT /NORESTART
 
 【卸载】
 
@@ -117,7 +117,7 @@ OneBot 11 独立运行模式。产物没有 JVM、没有 Mirai 控制台、没�
 
 【开源协议】
 
-  Arona-rs 以 GNU Affero General Public License v3.0（AGPL-3.0-only）发布，
+  Arona-onebot 以 GNU Affero General Public License v3.0（AGPL-3.0-only）发布，
   下一页是完整的英文许可证原文，中文译本见安装目录 LICENSE.zh-CN.md。
 
   简单说：你可以自由使用、修改、再分发，但分发时必须同时提供完整源代码并

@@ -57,18 +57,18 @@
 
 ### 方式一：安装包（推荐）
 
-1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-rs-<版本号>-setup-win-x64.exe` 并运行。
+1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-onebot-<版本号>-setup-win-x64.exe` 并运行。
    安装向导会先展示程序介绍与 AGPLv3 许可证全文，同意后才能继续。
 2. 默认的**完整安装**会一并装上 CPU 软件渲染依赖 `softgl\`（约 62 MB，Mesa llvmpipe）。
    服务器 / 虚拟机 / 没有显卡驱动或没有 DX12 的机器上，硬件渲染后端会全部失败甚至**静默卡住**，
    程序会自动切到这套 CPU 渲染把管理面板画出来，所以服务器上也能正常开 GUI；
    正常带显卡的机器会优先用硬件渲染，这份依赖平时不会被加载。
    只在正常带显卡的机器上用的话，安装时选「自定义安装」可以把这项取消，省下 62 MB。
-3. 安装目录（默认 `%LOCALAPPDATA%\Programs\Arona-rs`）里会释放一份默认配置
+3. 安装目录（默认 `%LOCALAPPDATA%\Programs\Arona-onebot`）里会释放一份默认配置
    （`arona-standalone\onebot.yml`、`arona.yml`、`trainer_config.yml`）。
    这些文件**只在缺失时写入**，升级安装不会覆盖你改过的配置；万一缺失或损坏，
    程序启动时也会按内置默认值自动补齐。
-4. 从开始菜单启动「Arona-rs」打开管理面板，填好 OneBot 连接与群配置即可。
+4. 从开始菜单启动「Arona-onebot」打开管理面板，填好 OneBot 连接与群配置即可。
 
 安装包是**按用户安装**的，全程不需要管理员权限，也不会把数据写进 `Program Files`。
 快捷方式已把工作目录设为安装目录，所以数据目录就是安装目录下的 `arona-standalone\`。
@@ -79,7 +79,7 @@
 安装程序会把安装目录写进注册表：
 
 ```
-HKEY_CURRENT_USER\Software\YuLinLoli\Arona-rs      # 选「为所有用户安装」时在 HKLM 下
+HKEY_CURRENT_USER\Software\YuLinLoli\Arona-onebot      # 选「为所有用户安装」时在 HKLM 下
   InstallPath        安装目录
   Version            已安装版本
   ExeName            主程序文件名
@@ -93,15 +93,15 @@ HKEY_CURRENT_USER\Software\YuLinLoli\Arona-rs      # 选「为所有用户安装
 
 ### 方式二：便携版
 
-1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-rs-<版本号>-win-x64.zip`
-   解压（里面是 `arona-rs.exe` 与 `softgl/`；裸 exe 不再单独发布，需要单文件就用安装包）。
+1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-onebot-<版本号>-win-x64.zip`
+   解压（里面是 `arona-onebot.exe` 与 `softgl/`；裸 exe 不再单独发布，需要单文件就用安装包）。
 2. 在你想作为数据目录的位置运行一次，会在**当前工作目录**下自动生成 `arona-standalone/`（`arona.yml`、`onebot.yml`、`data/`、`logs/`、`images/`、`backups/`）。
 3. 编辑 `onebot.yml` 填机器人账号和连接方式，编辑 `arona.yml` 填服务群和管理员。
 4. 重新启动。
 
 ### 管理员权限（UAC）
 
-主程序（`arona-rs.exe`）**启动时会申请管理员权限**：机器人要写数据目录、监听端口、
+主程序（`arona-onebot.exe`）**启动时会申请管理员权限**：机器人要写数据目录、监听端口、
 需要时替换 `softgl\` 下的渲染 DLL，统一以管理员身份运行可以避免权限不足导致的
 「启动没反应」「保存配置失败」「监听不了端口」等问题。
 
@@ -200,16 +200,16 @@ trainer:
 需要 Rust 1.85 或更新版本（`edition = "2024"`）。
 
 ```bash
-cargo build --release      # 发布构建(默认含管理 GUI), 产物: target/release/arona-rs[.exe]
-cargo dist                 # 发布构建 + 整理产物: target/release/arona-rs[.exe]
-                           # （主程序固定不带版本号, 升级时直接覆盖同名文件；顺手清理旧的 arona-rs-<版本号>.exe）
+cargo build --release      # 发布构建(默认含管理 GUI), 产物: target/release/arona-onebot[.exe]
+cargo dist                 # 发布构建 + 整理产物: target/release/arona-onebot[.exe]
+                           # （主程序固定不带版本号, 升级时直接覆盖同名文件；顺手清理旧的 arona-onebot-<版本号>.exe）
 cargo run --release        # 构建并运行(默认打开管理 GUI)
 cargo run-nogui            # 以纯命令行(黑窗口)模式运行
 cargo build-nogui          # 精简命令行版: 不含 GUI, 体积更小(--no-default-features)
-cargo installer            # 发布构建 + 打 Windows 安装包: target/release/arona-rs-<版本号>-setup-win-x64.exe
+cargo installer            # 发布构建 + 打 Windows 安装包: target/release/arona-onebot-<版本号>-setup-win-x64.exe
 ```
 
-安装包由 [Inno Setup 6](https://jrsoftware.org/isinfo.php) 编译，脚本见 [`installer/arona-rs.iss`](installer/arona-rs.iss)：
+安装包由 [Inno Setup 6](https://jrsoftware.org/isinfo.php) 编译，脚本见 [`installer/arona-onebot.iss`](installer/arona-onebot.iss)：
 
 - `cargo installer` 会自行查找 `ISCC.exe`（`ARONA_ISCC` 环境变量 → `PATH` → 注册表 → 常见安装路径），
   找不到时会提示先执行 `winget install --id JRSoftware.InnoSetup`。
@@ -218,11 +218,11 @@ cargo installer            # 发布构建 + 打 Windows 安装包: target/releas
 - 约 62 MB 的 `softgl/`（CPU 软件渲染依赖）与 exe **分开存储**，安装时释放到安装目录的 `softgl\`
   （程序就在 exe 同级的 `softgl\` 找它）。安装类型默认「完整安装」会勾上它，
   选「自定义安装」则可以取消；仓库里没有 `softgl/` 时安装包会自动不含该组件（`/DHasSoftgl` 控制）。
-- 安装目录写入 `HKCU\Software\YuLinLoli\Arona-rs`（`InstallPath` / `Version` / `ExeName` /
+- 安装目录写入 `HKCU\Software\YuLinLoli\Arona-onebot`（`InstallPath` / `Version` / `ExeName` /
   `UninstallString` / `SoftglInstalled`），再次运行安装包会据此自动装回原目录并跳过简介与协议页。
-- **主程序固定叫 `arona-rs.exe`（不带版本号）**：升级时覆盖同名文件即可，快捷方式、计划任务与
+- **主程序固定叫 `arona-onebot.exe`（不带版本号）**：升级时覆盖同名文件即可，快捷方式、计划任务与
   注册表里的 `ExeName` 都不用跟着版本号改；版本号只体现在安装包名、「应用和功能」列表和
-  面板的「关于」页面里。安装时会自动清掉老版本留下的 `arona-rs-<版本号>.exe`。
+  面板的「关于」页面里。安装时会自动清掉老版本留下的 `arona-onebot-<版本号>.exe`。
 
 可选：拉取**软件 OpenGL 兜底依赖**（Mesa llvmpipe，约 62MB，不入库）——没有显卡驱动 / 没有 DX12 的服务器靠它打开管理面板，详见下文「Windows Server / 虚拟机」：
 
@@ -241,10 +241,10 @@ pwsh -File scripts/make-icon.ps1     # 从 assets/source 的立绘取上半部�
 
 | 产物 | 说明 |
 | --- | --- |
-| `arona-rs-<版本号>-win-x64.zip` | 便携版：`arona-rs.exe`（主程序固定不带版本号）+ `softgl/` |
-| `arona-rs-<版本号>-setup-win-x64.exe` | 安装包：程序介绍 + AGPLv3 全文 + 默认配置 + 可选 `softgl/` 组件 |
+| `arona-onebot-<版本号>-win-x64.zip` | 便携版：`arona-onebot.exe`（主程序固定不带版本号）+ `softgl/` |
+| `arona-onebot-<版本号>-setup-win-x64.exe` | 安装包：程序介绍 + AGPLv3 全文 + 默认配置 + 可选 `softgl/` 组件 |
 
-裸 `arona-rs.exe` 只是构建中间产物（本地 `cargo dist` 产出、安装包与 zip 都从它取材），
+裸 `arona-onebot.exe` 只是构建中间产物（本地 `cargo dist` 产出、安装包与 zip 都从它取材），
 不再单独上传到 Release——否则 Release 里会躺着一个不带版本号、下载下来分不清版本的 exe。
 
 ## 自检
@@ -275,7 +275,7 @@ src/
   quartz/       定时任务
 assets/         程序图标（arona.ico）、预览图与源立绘（source/）
 scripts/        辅助脚本（make-icon.ps1 生成图标、fetch-softgl.ps1 拉取软件 OpenGL）
-installer/      Windows 安装包：arona-rs.iss(Inno Setup 脚本)、intro.txt(程序介绍)、
+installer/      Windows 安装包：arona-onebot.iss(Inno Setup 脚本)、intro.txt(程序介绍)、
                 defaults/(默认配置模板)、languages/(简体中文向导翻译)
 build.rs        构建脚本：把图标嵌入 Windows 产物
 ```
@@ -286,9 +286,9 @@ build.rs        构建脚本：把图标嵌入 Windows 产物
 
 ```bash
 cargo build --release    # 默认含 GUI
-target/release/arona-rs          # 启动 -> 打开管理面板
-target/release/arona-rs --nogui  # 只启动命令行(黑窗口)模式
-target/release/arona-rs --gui    # 显式打开面板（默认行为，等价于不加参数）
+target/release/arona-onebot          # 启动 -> 打开管理面板
+target/release/arona-onebot --nogui  # 只启动命令行(黑窗口)模式
+target/release/arona-onebot --gui    # 显式打开面板（默认行为，等价于不加参数）
 ```
 
 Windows 上含 GUI 的产物使用 windows 子系统，GUI 模式不会多出控制台窗口；`--nogui`
@@ -366,7 +366,7 @@ Windows 上含 GUI 的产物使用 windows 子系统，GUI 模式不会多出控
 # 拉取依赖（约 62MB，不入库；需要时可重新跑）
 powershell -ExecutionPolicy Bypass -File scripts/fetch-softgl.ps1
 # 显式以软渲染启动（不加 --softgl 时，前几个后端卡死或失败会自动切到它）
-arona-rs.exe --softgl
+arona-onebot.exe --softgl
 ```
 
 - 目录查找顺序：`ARONA_SOFTGL_DIR` → exe 同级 `softgl\` → 工作目录 `softgl\` → `arona-standalone\softgl\`。
@@ -414,7 +414,7 @@ arona-rs.exe --softgl
 
 排查清单：
 
-- 直接跑 `arona-rs.exe --nogui`：能起机器人说明只是 GUI 的问题，用命令行模式即可；
+- 直接跑 `arona-onebot.exe --nogui`：能起机器人说明只是 GUI 的问题，用命令行模式即可；
 - 双击毫无反应：看 `arona-standalone/logs/startup-error.log`，配置/渲染/panic 的原因都在里面；
 - 面板起不来：先看日志里的后端失败原因；实在不行跑一次 `scripts/fetch-softgl.ps1` 走软渲染；
 - 用远程桌面（RDP）登录通常也能直接开面板；

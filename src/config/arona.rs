@@ -292,7 +292,7 @@ fn yaml_quote(value: &str) -> String {
 fn template(config: &AronaConfig) -> String {
     let mut out = String::new();
     out.push_str("# ==================== Arona 业务配置 ====================\n");
-    out.push_str("# Rust 移植版（arona-rs）独立运行模式使用本文件，修改后保存即自动热重载。\n");
+    out.push_str("# Rust 移植版（arona-onebot）独立运行模式使用本文件，修改后保存即自动热重载。\n");
     out.push_str("# OneBot 协议连接配置见同目录 onebot.yml；本文件只放非 OneBot 的业务配置。\n\n");
     out.push_str("# 允许响应的群号列表，留空表示响应所有群\n");
     out.push_str(&format!("groups: {:?}\n", config.groups));

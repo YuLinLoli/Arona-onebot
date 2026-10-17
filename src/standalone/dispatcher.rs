@@ -317,7 +317,7 @@ fn help_text(config: &OneBotConfig) -> String {
 
 fn version_text() -> String {
     format!(
-        "Arona 版本信息\n版本: {}\n插件 ID: arona-rs\n名称: arona-rs (Rust 移植版)",
+        "Arona 版本信息\n版本: {}\n插件 ID: arona-onebot\n名称: arona-onebot (Rust 移植版)",
         env!("CARGO_PKG_VERSION")
     )
 }

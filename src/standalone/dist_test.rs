@@ -1,18 +1,18 @@
 //! 构建任务（cargo 别名见 .cargo/config.toml）
 //!
-//!   cargo dist       发布构建: target/release/arona-rs[.exe]
+//!   cargo dist       发布构建: target/release/arona-onebot[.exe]
 //!   cargo installer  在上面基础上调用 Inno Setup，打出 Windows 安装包:
-//!                    target/release/arona-rs-<版本号>-setup-win-x64.exe
+//!                    target/release/arona-onebot-<版本号>-setup-win-x64.exe
 //!
-//! 主程序固定叫 `arona-rs[.exe]`、**不带版本号**：升级/自动更新时可以直接覆盖同名文件，
+//! 主程序固定叫 `arona-onebot[.exe]`、**不带版本号**：升级/自动更新时可以直接覆盖同名文件，
 //! 快捷方式、计划任务、注册表里的 ExeName 也都不用跟着版本号改。版本号只出现在安装包名、
-//! 便携 zip 名与「关于」页面里（安装包命名见 installer/arona-rs.iss 的 OutputBaseFilename）。
-//! 历史构建留下的 `arona-rs-<版本号>[.exe]` 会在构建结束时清理掉。
+//! 便携 zip 名与「关于」页面里（安装包命名见 installer/arona-onebot.iss 的 OutputBaseFilename）。
+//! 历史构建留下的 `arona-onebot-<版本号>[.exe]` 会在构建结束时清理掉。
 
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-/// 发布构建（默认含管理 GUI），返回 target/release/arona-rs[.exe]
+/// 发布构建（默认含管理 GUI），返回 target/release/arona-onebot[.exe]
 fn build_release(root: &Path) -> PathBuf {
     let cargo = std::env::var("CARGO").unwrap_or_else(|_| "cargo".to_string());
     println!("[dist] 开始发布构建");
@@ -23,7 +23,7 @@ fn build_release(root: &Path) -> PathBuf {
         .status()
         .expect("启动 cargo build --release 失败");
     assert!(status.success(), "cargo build --release 失败");
-    target_release_dir(root).join(format!("arona-rs{}", std::env::consts::EXE_SUFFIX))
+    target_release_dir(root).join(format!("arona-onebot{}", std::env::consts::EXE_SUFFIX))
 }
 
 fn target_release_dir(root: &Path) -> PathBuf {
@@ -33,12 +33,12 @@ fn target_release_dir(root: &Path) -> PathBuf {
         .join("release")
 }
 
-/// 交付前的产物整理：主程序固定为 arona-rs[.exe]（不带版本号，便于覆盖升级），
-/// 顺带清掉历史构建留下的 `arona-rs-<版本号>[.exe]`（安装包 arona-rs-*-setup-*.exe 保留）。
+/// 交付前的产物整理：主程序固定为 arona-onebot[.exe]（不带版本号，便于覆盖升级），
+/// 顺带清掉历史构建留下的 `arona-onebot-<版本号>[.exe]`（安装包 arona-onebot-*-setup-*.exe 保留）。
 fn finalize_binary(root: &Path) -> PathBuf {
     let release_dir = target_release_dir(root);
     let suffix = std::env::consts::EXE_SUFFIX;
-    let exe = release_dir.join(format!("arona-rs{suffix}"));
+    let exe = release_dir.join(format!("arona-onebot{suffix}"));
     if !exe.is_file() {
         panic!("发布产物不存在: {}", exe.display());
     }
@@ -46,7 +46,7 @@ fn finalize_binary(root: &Path) -> PathBuf {
         for entry in entries.flatten() {
             let name = entry.file_name().to_string_lossy().to_string();
             let stale =
-                name.starts_with("arona-rs-") && name.ends_with(suffix) && !name.contains("-setup");
+                name.starts_with("arona-onebot-") && name.ends_with(suffix) && !name.contains("-setup");
             if !stale {
                 continue;
             }
@@ -81,7 +81,7 @@ fn copy_softgl(root: &Path) -> bool {
     }
 }
 
-/// 构建任务: 发布构建并整理产物（主程序 arona-rs[.exe] 不带版本号，交付推荐）
+/// 构建任务: 发布构建并整理产物（主程序 arona-onebot[.exe] 不带版本号，交付推荐）
 #[ignore = "构建任务, 运行: cargo dist"]
 #[test]
 fn dist_build() {
@@ -100,14 +100,14 @@ fn dist_build() {
 /// 构建任务: 发布构建 + 打包 Windows 安装包（需要 Inno Setup 6，安装包名带版本号）
 ///
 /// ISCC 查找顺序: 环境变量 ARONA_ISCC -> PATH -> 注册表 InstallLocation -> 常见安装目录。
-/// 安装包内容与目录规划见 installer/arona-rs.iss。
+/// 安装包内容与目录规划见 installer/arona-onebot.iss。
 #[ignore = "构建任务, 运行: cargo installer"]
 #[test]
 fn installer_build() {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let version = env!("CARGO_PKG_VERSION");
     let release_dir = target_release_dir(&root);
-    println!("[installer] 开始构建安装包 (arona-rs {version})");
+    println!("[installer] 开始构建安装包 (arona-onebot {version})");
 
     build_release(&root);
     let exe = finalize_binary(&root);
@@ -135,7 +135,7 @@ fn installer_build() {
     // 结果 Command 只报一句难懂的 "The directory name is invalid"，这里先给出明确原因。
     let installer_dir = root.join("installer");
     assert!(
-        installer_dir.join("arona-rs.iss").is_file(),
+        installer_dir.join("arona-onebot.iss").is_file(),
         "找不到安装包脚本 {}：installer/ 必须一起提交到仓库（git add installer）",
         installer_dir.display()
     );
@@ -150,12 +150,12 @@ fn installer_build() {
     if has_softgl {
         command.arg("/DHasSoftgl=1");
     }
-    command.arg("arona-rs.iss");
+    command.arg("arona-onebot.iss");
 
     let status = command.status().expect("启动 ISCC.exe 失败");
     assert!(status.success(), "Inno Setup 编译安装包失败");
 
-    let setup = release_dir.join(format!("arona-rs-{version}-setup-win-x64.exe"));
+    let setup = release_dir.join(format!("arona-onebot-{version}-setup-win-x64.exe"));
     let size = std::fs::metadata(&setup)
         .map(|meta| meta.len())
         .unwrap_or_default();
