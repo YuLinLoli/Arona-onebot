@@ -1,8 +1,8 @@
-# Arona-rs
+# Arona-onebot
 
 碧蓝档案（Blue Archive）QQ 机器人 **arona** 的 Rust 移植版，只保留 **OneBot 独立运行模式**，完全剥离 Mirai。
 
-- 本项目仓库：<https://github.com/YuLinLoli/Arona-rs>
+- 本项目仓库：<https://github.com/YuLinLoli/Arona-onebot>
 - 上游原版（Kotlin + Mirai）：<https://github.com/diyigemt/arona>
 - 许可证：GNU AGPLv3（见文末「移植声明与许可」）
 
@@ -57,7 +57,7 @@
 
 ### 方式一：安装包（推荐）
 
-1. 从 [Releases](https://github.com/YuLinLoli/Arona-rs/releases) 下载 `arona-rs-<版本号>-setup-win-x64.exe` 并运行。
+1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-rs-<版本号>-setup-win-x64.exe` 并运行。
    安装向导会先展示程序介绍与 AGPLv3 许可证全文，同意后才能继续。
 2. 默认的**完整安装**会一并装上 CPU 软件渲染依赖 `softgl\`（约 62 MB，Mesa llvmpipe）。
    服务器 / 虚拟机 / 没有显卡驱动或没有 DX12 的机器上，硬件渲染后端会全部失败甚至**静默卡住**，
@@ -93,7 +93,7 @@ HKEY_CURRENT_USER\Software\YuLinLoli\Arona-rs      # 选「为所有用户安装
 
 ### 方式二：便携版
 
-1. 从 [Releases](https://github.com/YuLinLoli/Arona-rs/releases) 下载 `arona-rs-<版本号>-win-x64.zip`
+1. 从 [Releases](https://github.com/YuLinLoli/Arona-onebot/releases) 下载 `arona-rs-<版本号>-win-x64.zip`
    解压（里面是 `arona-rs.exe` 与 `softgl/`；裸 exe 不再单独发布，需要单文件就用安装包）。
 2. 在你想作为数据目录的位置运行一次，会在**当前工作目录**下自动生成 `arona-standalone/`（`arona.yml`、`onebot.yml`、`data/`、`logs/`、`images/`、`backups/`）。
 3. 编辑 `onebot.yml` 填机器人账号和连接方式，编辑 `arona.yml` 填服务群和管理员。
@@ -327,7 +327,7 @@ Windows 上含 GUI 的产物使用 windows 子系统，GUI 模式不会多出控
 - 缓冲上限 3000 行（只保留最新），完整历史仍按天落盘到 `arona-standalone/logs/arona-yyyy-MM-dd.log`。
 
 **关于**
-- 显示版本号、项目仓库（https://github.com/YuLinLoli/Arona-rs ）、鸣谢（原版作者
+- 显示版本号、项目仓库（https://github.com/YuLinLoli/Arona-onebot ）、鸣谢（原版作者
   https://github.com/diyigemt ）、开源协议，以及数据目录路径与快捷打开按钮。
 
 **外观（白天 / 黑夜）**
@@ -442,6 +442,6 @@ group_settings:
 - 上游版权：Copyright (C) 2020-2021 StageGuard / diyigemt，以 GNU AGPLv3 授权
 - 本移植版版权：Copyright (C) 2026 YuLinLoli
 
-依据 GNU AGPLv3 第 13 条，通过网络与本机器人交互的用户有权获取其对应源码，获取地址即本仓库：<https://github.com/YuLinLoli/Arona-rs>
+依据 GNU AGPLv3 第 13 条，通过网络与本机器人交互的用户有权获取其对应源码，获取地址即本仓库：<https://github.com/YuLinLoli/Arona-onebot>
 
 本项目同样以 **GNU Affero General Public License v3.0** 授权发布，全文见 [LICENSE](LICENSE)；中文说明（非官方译本，仅供参考，以英文原文为准）见 [LICENSE.zh-CN.md](LICENSE.zh-CN.md)。你可以自由使用、修改、分发，但分发衍生作品或将其作为网络服务提供时，必须保留同样的许可与版权声明，并向使用者提供完整对应源码。

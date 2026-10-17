@@ -1058,7 +1058,7 @@ impl AronaGui {
     // ==================== 关于 ====================
 
     fn about(&self, ui: &mut egui::Ui) {
-        ui.heading("关于 Arona-rs");
+        ui.heading("关于 Arona-onebot");
         ui.add_space(4.0);
         ui.label(format!("版本 v{}", env!("CARGO_PKG_VERSION")));
         ui.label("碧蓝档案 QQ 机器人 arona 的 Rust 移植版：OneBot 独立模式，完全剥离 Mirai / JVM。");
@@ -1068,8 +1068,8 @@ impl AronaGui {
 
         ui.strong("项目地址");
         ui.hyperlink_to(
-            "https://github.com/YuLinLoli/Arona-rs",
-            "https://github.com/YuLinLoli/Arona-rs",
+            "https://github.com/YuLinLoli/Arona-onebot",
+            "https://github.com/YuLinLoli/Arona-onebot",
         );
         ui.add_space(10.0);
 
@@ -1082,7 +1082,7 @@ impl AronaGui {
         ui.add_space(10.0);
         ui.strong("开源协议");
         ui.label("GNU Affero General Public License v3.0（AGPL-3.0-only）。");
-        ui.label("本程序按「现状」提供，不附带任何担保；移植部分版权归 Arona-rs 作者所有。");
+        ui.label("本程序按「现状」提供，不附带任何担保；移植部分版权归本项目作者所有。");
         ui.add_space(10.0);
 
         ui.separator();
